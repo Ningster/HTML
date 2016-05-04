@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
+
     <script>
       $(function(){
         //add and remove active class on nav
@@ -19,16 +20,10 @@
         });
 
         //hover affect on dynamic menu element
-        $('#menu').on('mouseover','.col-sm-4,.col-sm-6,.col-sm-12',function(){
-            $(this).css('-webkit-filter','grayscale(0%)');
-          })
-          .on('mouseleave','.col-sm-4,.col-sm-6,.col-sm-12',function(){
-            $(this).css('-webkit-filter','grayscale(100%)');
-          });
-          // $('#menu').on('click','.col-sm-4,.col-sm-6,.col-sm-12',function(event){
-          //     event.preventDefault();
-          //     $(this).css('-webkit-filter','grayscale(0%)');
-          //   });
+          $('#menu').on('click','.product',function(event){
+              event.preventDefault();
+              $(this).css('-webkit-filter','grayscale(0%)');
+            });
 
 
 
@@ -50,7 +45,7 @@
             if (count>Q*3) {
               x = 12/(L%3)
             }
-            var html = "<div class='col-sm-"+x+"' style='background-image:"+value+"'></div>";
+            var html = "<div class='col-sm-"+x+" product' style='background-image:"+value+"'></div>";
             $("#menu > div.row").append(html);
           });
 
@@ -93,7 +88,7 @@
         height:40vh;
         width: 100vw;
       }
-      #menu .col-sm-4, #menu .col-sm-6, #menu .col-sm-12{
+      #menu .product{
         height:40vh;
         overflow: hidden;
         background-size: cover;
@@ -102,9 +97,14 @@
         -webkit-filter: grayscale(100%);
       }
 
-      #contact{
-        border:10px solid blue;
-        height:100vh;
+      #menu .product:hover{
+        -webkit-filter: grayscale(0%);
+      }
+
+      #contact, #map{
+        height:40vh;
+        margin: 0px;
+        padding: 0px;
       }
     </style>
   </head>
@@ -163,8 +163,42 @@
       </div>
 
       <div id="contact" class="container-fluid">
+        <div class="jumbotron" style="background-color:white;text-align:center">
+          <h1 style="font-size:20px ; line-height:15px">Open hour:</h1>
+          <h1 style="font-size:20px ; line-height:15px">Mon~Fri : 10am ~ 4pm</h1>
+          <h1 style="font-size:20px ; line-height:15px">Sat~Sun : 10am~10pm</h1>
+        </div>
+      </div>
+      <div id="map" class="container-fluid">
+        <script>
+          function initMap() {
+            //address or latitude
+            var myLatLng = {lat: 25.017800, lng: 121.545363};
+            var myAddress = "106台北市大安區忠孝東路四段205巷7弄11號";
+
+            var mapDiv = document.getElementById('map');
+            var map = new google.maps.Map(mapDiv, {
+              center: myLatLng,
+              zoom: 14
+            });
+            var marker = new google.maps.Marker({
+              // position: new google.maps.LatLng(25.017800,121.545363),
+              position: myLatLng,
+              title: "Mark On Map",
+              url: "https://www.google.com.tw/maps/search/"+"dazzling",
+            });
+
+            marker.addListener('click', function(mouseEvent) {
+               window.open(marker.url);
+            });
+            marker.setMap(map);
+          }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+       async defer></script>
 
       </div>
+
 
   </body>
 </html>
